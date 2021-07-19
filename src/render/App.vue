@@ -1,26 +1,15 @@
 <template>
-  <div class="logo-box">
-    <img style="height:200px;" src="./assets/electron.png" alt="Electron logo">
-    <img alt="Vue logo" src="./assets/logo.png" />
-  </div>
-  <HelloWorld msg="Electron@12、Vue@3、Vite@2" />
+  <router-view/>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="ts">
+import {defineComponent} from 'vue'
+import {useRouter} from 'vue-router'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+export default defineComponent({
+  setup() {
+    const router = useRouter()
+    router.push({name: 'Login'})
+  },
+})
 </script>
-
-<style>
-.logo-box {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-}
-</style>
