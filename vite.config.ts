@@ -1,17 +1,31 @@
-require('dotenv').config({ path: join(__dirname, '.env') })
+require('dotenv').config({ path: join(__dirname, '.env') });
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { join } from 'path'
-import electron from 'vitejs-plugin-electron'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import { join } from 'path';
+import electron from 'vitejs-plugin-electron';
+import styleImport from 'vite-plugin-style-import';
 
-const root = join(__dirname, 'src/render')
+const root = join(__dirname, 'src/render');
 
-export default defineConfig(env => {
+export default defineConfig((env) => {
   return {
     plugins: [
       vue(),
       electron(),
+      styleImport({
+        libs: [
+          {
+            libraryName: 'element-plus',
+            resolveStyle: (name: string) => {
+              return `element-plus/lib/theme-chalk/${name}.css`;
+            },
+            resolveComponent: (name: string) => {
+              return `element-plus/lib/${name}`;
+            },
+          },
+        ],
+      }),
     ],
     root,
     base: './', // index.html 中静态资源加载位置
@@ -20,7 +34,7 @@ export default defineConfig(env => {
     },
     resolve: {
       alias: {
-        '@render': join(__dirname, 'src/render'),
+        '@': join(__dirname, 'src/render'),
         '@main': join(__dirname, 'src/main'),
         '@src': join(__dirname, 'src'),
         '@root': __dirname,
@@ -34,5 +48,5 @@ export default defineConfig(env => {
       assetsDir: '', // 相对路径 加载问题
       sourcemap: true,
     },
-  }
-})
+  };
+});
